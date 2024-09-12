@@ -7,13 +7,15 @@ exports.registerUser = async (req, res) => {
   const { name, email, password, phone, profession } = req.body;
   try {
     const userExists = await User.findOne({ email });
+
     if (userExists) {
       return res.status(400).json({ message: 'User already exists' });
     }
 
     const user = await User.create({ name, email, password, phone, profession });
     res.status(201).json({ message: 'User registered successfully', user });
-  } catch (error) {
+  } 
+  catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
@@ -30,7 +32,8 @@ exports.loginUser = async (req, res) => {
 
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
     res.json({ message: 'Login successful', token });
-  } catch (error) {
+  } 
+  catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
@@ -40,7 +43,8 @@ exports.getUsers = async (req, res) => {
   try {
     const users = await User.find();
     res.json(users);
-  } catch (error) {
+  } 
+  catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
@@ -58,7 +62,8 @@ exports.updateUser = async (req, res) => {
 
     await user.save();
     res.json({ message: 'User updated successfully' });
-  } catch (error) {
+  } 
+  catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
@@ -72,7 +77,8 @@ exports.deleteUser = async (req, res) => {
 
     await user.remove();
     res.json({ message: 'User deleted successfully' });
-  } catch (error) {
+  } 
+  catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
